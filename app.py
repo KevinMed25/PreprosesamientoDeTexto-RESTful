@@ -6,7 +6,7 @@ from collections import Counter
 
 app = Flask(__name__)
 
-# Cargar el modelo de spaCy para español
+# Cargar el modelo de spaCy
 try:
     nlp = spacy.load("es_core_news_sm")
 except OSError:
@@ -14,7 +14,7 @@ except OSError:
     spacy.cli.download("es_core_news_sm")
     nlp = spacy.load("es_core_news_sm")
 
-# Descargar recursos de NLTK 
+# Descargar recursos de NLTK
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
@@ -35,7 +35,7 @@ def generate_ngrams(text, n=3):
     ngrams = [text[i:i+n] for i in range(len(text)-n+1)]
     return Counter(ngrams)
 
-# -------------------- Funciones de Procesamiento de Texto (Arquitectura Pipeline) --------------------
+# -------------------- Funciones de Procesamiento de Texto --------------------
 
 def detect_language(text, language_profiles):
     def proportion_similarity(profile1, profile2):
@@ -53,9 +53,12 @@ def correct_word(word, dictionary):
     min_distance = float('inf')
     corrected_word = word
 
+    if word.upper() == word:
+        return word
+
     for dict_word in dictionary:
         distance = Levenshtein.distance(word, dict_word)
-        if distance < min_distance and distance <= 2:  # Solo corrige si la distancia es pequeña
+        if distance < min_distance and distance <= 2: 
             min_distance = distance
             corrected_word = dict_word
 
@@ -63,7 +66,7 @@ def correct_word(word, dictionary):
 
 def correct_text(text, dictionary):
     words = text.split()
-    corrected_words = [correct_word(word, dictionary) for word in words]
+    corrected_words = [correct_word(word.lower(), dictionary) for word in words]
     return " ".join(corrected_words)
 
 def tokenize_text(text):
@@ -91,8 +94,6 @@ language_profiles = {
     'fr': generate_ngrams("bonjour comment ça va ami ceci est un exemple en français", n=3),
 }
 
-# Diccionario de palabras para la corrección ortográfica
-
 dictionary = [
     # Saludos y expresiones comunes
     "hola", "adiós", "gracias", "por favor", "sí", "no", "buenos", "días", "buenas", "tardes", "noches",  
@@ -101,7 +102,7 @@ dictionary = [
     "yo", "tú", "vos", "usted", "él", "ella", "nosotros", "nosotras", "ustedes", "ellos", "ellas",  
    
     # Pronombres interrogativos  
-    "qué", "quién", "quienes", "cuál", "cuáles", "dónde", "cómo", "cuándo", "por qué", "para qué", "cuánto", "cuántos", "cuántas",  
+    # "qué", "quién", "quienes", "cuál", "cuáles", "dónde", "cómo", "cuándo", "por qué", "para qué", "cuánto", "cuántos", "cuántas",  
 
     # Verbos esenciales  
     "ser", "estar", "haber", "tener", "poder", "hacer", "decir", "ver", "dar", "saber", "querer",  
@@ -123,6 +124,9 @@ dictionary = [
     "historia", "palabra", "nombre", "forma", "manera", "caso", "hecho", "ejemplo", "razón", "verdad", "mentira"  
 ]
 
+
+# Lista de stopwords en español
+stop_words = set(nltk.corpus.stopwords.words('spanish'))
 
 # -------------------- Rutas de Flask --------------------
 

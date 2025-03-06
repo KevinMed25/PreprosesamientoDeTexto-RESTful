@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,116 @@
         <p><strong>Tokens:</strong> {{ tokens }}</p>
         <p><strong>Tokens Filtrados (sin stopwords):</strong> {{ filtered_tokens }}</p>
         <p><strong>Lemmas:</strong> {{ lemmas }}</p>
+    {% endif %}
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamiento de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00698f;
+        }
+        
+        form {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #00698f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #005c7f;
+        }
+        
+        #resultados {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resultado {
+            margin-bottom: 10px;
+        }
+        
+        .resultado strong {
+            color: #00698f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Procesamiento de Texto</h1>
+    <form method="post">
+        <label for="text">Introduce el texto:</label>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea>
+        <button type="submit">Procesar</button>
+    </form>
+
+    {% if original_text %}
+        <div id="resultados">
+            <h2>Resultados:</h2>
+            <div class="resultado">
+                <p><strong>Texto Original:</strong> {{ original_text }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Idioma Detectado:</strong> {{ language }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Similitudes de Idioma:</strong> {{ language_similarities }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Texto Corregido:</strong> {{ corrected_text }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Tokens:</strong> {{ tokens }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Tokens Filtrados (sin stopwords):</strong> {{ filtered_tokens }}</p>
+            </div>
+            <div class="resultado">
+                <p><strong>Lemmas:</strong> {{ lemmas }}</p>
+            </div>
+        </div>
     {% endif %}
 </body>
 </html>
