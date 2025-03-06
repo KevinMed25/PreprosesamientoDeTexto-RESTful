@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamiento de Texto</title>
+</head>
+<body>
+    <h1>Procesamiento de Texto</h1>
+    <form method="post">
+        <label for="text">Introduce el texto:</label><br>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+        <button type="submit">Procesar</button>
+    </form>
+
+    {% if original_text %}
+        <h2>Resultados:</h2>
+        <p><strong>Texto Original:</strong> {{ original_text }}</p>
+        <p><strong>Idioma Detectado:</strong> {{ language }}</p>
+        <p><strong>Similitudes de Idioma:</strong> {{ language_similarities }}</p>
+        <p><strong>Texto Corregido:</strong> {{ corrected_text }}</p>
+        <p><strong>Tokens:</strong> {{ tokens }}</p>
+        <p><strong>Tokens Filtrados (sin stopwords):</strong> {{ filtered_tokens }}</p>
+        <p><strong>Lemmas:</strong> {{ lemmas }}</p>
+    {% endif %}
+</body>
+</html>
